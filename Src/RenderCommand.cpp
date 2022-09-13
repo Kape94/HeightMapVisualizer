@@ -2,8 +2,6 @@
 
 #include <GL/glew.h>
 
-#include "ShaderFunctions.h"
-
 //-----------------------------------------------------------------------------
 
 void RenderCommand::Setup(
@@ -96,14 +94,14 @@ void RenderCommand::DeleteCurrent() {
 //-----------------------------------------------------------------------------
 
 void RenderCommand::Execute(
-  const unsigned shaderID, 
+  const Shader& shader, 
   const bool useWireframeMode
 ) 
 {
   const unsigned polygonMode = useWireframeMode ? GL_LINE_STRIP : GL_TRIANGLES;
 
   glBindVertexArray(VAO);
-  ShaderFunctions::UseShader(shaderID);
+  shader.Use();
   glDrawElements(polygonMode, nIndices, GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);
 }

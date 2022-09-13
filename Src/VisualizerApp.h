@@ -3,6 +3,7 @@
 
 #include "Camera.h"
 #include "RenderCommand.h"
+#include "Shader.h"
 
 class VisualizerApp {
   public:
@@ -21,7 +22,7 @@ class VisualizerApp {
     
     static const char* heightMapFileName;
     static RenderCommand command;
-    static unsigned shaderID;
+    static Shader shader;
     static Camera camera;
     static bool useWireframeMode;
 };

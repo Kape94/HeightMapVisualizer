@@ -5,7 +5,6 @@
 #include "GLHelperFunctions.h"
 #include "RenderCommand.h"
 #include "ShaderCodes.h"
-#include "ShaderFunctions.h"
 #include "TerrainGenerator.h"
 
 //-----------------------------------------------------------------------------
@@ -14,7 +13,7 @@ constexpr unsigned WIDTH = 1280;
 constexpr unsigned HEIGHT = 960;
 
 const char* VisualizerApp::heightMapFileName = nullptr;
-unsigned VisualizerApp::shaderID = 0;
+Shader VisualizerApp::shader;
 RenderCommand VisualizerApp::command;
 Camera VisualizerApp::camera;
 bool VisualizerApp::useWireframeMode = false;
@@ -36,15 +35,13 @@ void VisualizerApp::Exec(const char* fileName) {
 
 void VisualizerApp::Cleanup() {
   command.DeleteCurrent();
-  ShaderFunctions::DeleteShader(shaderID);
+  shader.DeleteProgram();
 }
 
 //-----------------------------------------------------------------------------
 
 void VisualizerApp::InitializationFunc() {
-  shaderID = ShaderFunctions::CreateShader(
-    ShaderCodes::vertexShader, ShaderCodes::fragmentShader
-  );
+  shader.CreateProgram(ShaderCodes::vertexShader, ShaderCodes::fragmentShader);
 
   TerrainGenerator generator;
   generator.Load(heightMapFileName);
@@ -68,9 +65,9 @@ void VisualizerApp::RenderFunc() {
   GLHelperFunctions::Clear();
 
   const glm::mat4x4 viewMatrix = camera.CreateViewMatrix(WIDTH, HEIGHT);
-  ShaderFunctions::SetUniform(shaderID, "viewMatrix", viewMatrix);
+  shader.SetUniform("viewMatrix", viewMatrix);
 
-  command.Execute(shaderID, useWireframeMode);
+  command.Execute(shader, useWireframeMode);
   
   GLHelperFunctions::Flush();
 }

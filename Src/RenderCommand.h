@@ -1,6 +1,8 @@
 #ifndef _RENDER_COMMAND_H
 #define _RENDER_COMMAND_H
 
+#include "Shader.h"
+
 class RenderCommand {
   public:
     void Setup(
@@ -13,7 +15,7 @@ class RenderCommand {
     void DeleteCurrent();
 
     void Execute(
-      const unsigned shaderID,
+      const Shader& shader,
       const bool useWireframeMode
     );
 
