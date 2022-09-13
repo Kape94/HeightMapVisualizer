@@ -14,7 +14,13 @@ To install and build this application, execute this steps:
 
 ## How to use de application
 
-To use the application you just need to call the command: HeightMapVisualizer.exe <imageFileName>
+To use the application you just need to call the command: 
+
+HeightMapVisualizer.exe \<imageFileName\>
+
+For example:
+
+HeightMapVisualizer.exe C:/Temp/iceland_heightmap.png
   
 The application will generate a scene from the input height map, and you can use the following commands:
   - Keys W, A, S, D: move the camera position;
